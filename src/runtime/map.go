@@ -157,6 +157,11 @@ type bmap struct {
 	// code a bit more complicated than alternating key/elem/key/elem/... but it allows
 	// us to eliminate padding which would be needed for, e.g., map[int64]int8.
 	// Followed by an overflow pointer.
+
+	// 代码比 k1/v1/k2/v2这种要复杂 , 实际设计是 k1/k2/k3/v1/v2/v3
+	// 很巧妙的设计, 避免了内存对齐问题
+	// 示例map[int64]int8 , 这种情况下 64位情况下 int64占用8字节 , eg:  fmt.Println("int64 size:", unsafe.Sizeof(int64(1))) 可以看到
+	// 例如map[int64]int8 后面跟一个溢出指针
 }
 
 // A hash iteration structure.
